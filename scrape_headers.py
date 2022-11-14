@@ -1,3 +1,43 @@
+
+h_post_login = {
+"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+"Accept-Encoding":"gzip, deflate, br",
+"Accept-Language":"en-US,en;q=0.9,de;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+"Cache-Control":"max-age=0",
+"Connection":"keep-alive",
+"Content-Length":"0",
+"Content-Type":"application/x-www-form-urlencoded",
+"Host":"10.103.49.238:8000",
+"Origin":"https://10.103.49.238:8000",
+"Referer":"https://10.103.49.238:8000/",
+"sec-ch-ua":'"Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"',
+"sec-ch-ua-mobile":"?0",
+"sec-ch-ua-platform":"Windows",
+"Sec-Fetch-Dest":"document",
+"Sec-Fetch-Mode":"navigate",
+"Sec-Fetch-Site":"same-origin",
+"Sec-Fetch-User":"?1",
+"Upgrade-Insecure-Requests":"1",
+"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        }
+
+h_get_data = {
+"Accept": "application/json, text/plain, */*",
+"Accept-Encoding":  "gzip, deflate, br",
+"Accept-Language":  "en-US,en;q=0.9,de;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+"Authorization":    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNDMwMTBlYTYtMTRiNi00OWVkLWE3ZjEtYmQxZjA4ZTU2MWFlIiwidXNlcm5hbWUiOiJ6eXdhbmciLCJpYXQiOjE2NjY5MjIxNjF9.hxvRaDUy55XCs_3PUjnQ5R-Rjy2RN-6Dz2uBR7k76Ec",
+"Connection":       "keep-alive",
+"Host":             "10.103.49.238:8000",
+"Referer":          "https://10.103.49.238:8000/",
+"sec-ch-ua":        '"Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"',
+"sec-ch-ua-mobile":     "?0",
+"sec-ch-ua-platform":   "Windows",
+"Sec-Fetch-Dest":       "empty",
+"Sec-Fetch-Mode":       "cors",
+"Sec-Fetch-Site":       "same-origin",
+"User-Agent":           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        }
+
 h_360_get_data = {
         "Accept":"*/*",
         "Accept-Encoding":"gzip, deflate",
@@ -11,4 +51,21 @@ h_360_get_data = {
         "token_id":"6d0ff62ded5e37c6ccaf6e808434826a",
         "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0",
         "X-Requested-With":"XMLHttpRequest",
+        }
+
+h_360_get_token = {
+    "Host":"192.168.0.1",
+    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0",
+    "Accept":"application/json, text/javascript, */*; q=0.01",
+    "Accept-Language":"en-US,en;q=0.5",
+    "Accept-Encoding":"gzip, deflate",
+    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
+    "token_id":"undefined",
+    "X-Requested-With":"XMLHttpRequest",
+    "Content-Length":"87",
+    "Origin":"http://192.168.0.1",
+    "Connection":"keep-alive",
+    "Referer":"http://192.168.0.1/login_pc.htm",
+    "Pragma":"no-cache",
+    "Cache-Control":"no-cache",
         }

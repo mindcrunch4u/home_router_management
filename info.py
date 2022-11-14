@@ -4,6 +4,7 @@ import json
 import datetime
 import os
 from time import sleep
+from scrape_crypto import to_crypto_string
 
 delay=10
 time_info_start = {
@@ -12,6 +13,10 @@ time_info_start = {
         "day":str(datetime.datetime.today().day),
         }
 output_name = "log_" + time_info_start["year"] + "_" + time_info_start["month"] + "_" + time_info_start["day"] + ".txt"
+g_session = requests.Session()
+g_cookie = None
+g_token_id = None
+g_header_get_data = scrape_headers.h_360_get_data
 
 def info(str_content):
     time = datetime.datetime.now()
@@ -46,16 +51,63 @@ def to_file(str_content):
     except:
         info("write failure")
 
-info("program starts")
-endpoint = "http://192.168.0.1/app/devices/webs/getdeviceslist.cgi"
-headers = scrape_headers.h_360_get_data
-data = {"Qihoo_360_login":"7792650288e777f04d7e2b81b48c9fd6"}
-while True:
-    try:
-        rotate_file()
-        response_json = requests.post(endpoint, data=data, headers=headers, verify=False).json()
-        to_file(json.dumps(response_json, indent=None))
-        print(".", end="",flush=True)
-    except:
-        info("request failure")
-    sleep(delay)
+def calculate_crypt_string():
+    endpoint = "http://192.168.0.1/router/get_rand_key.cgi?noneed=noneed"
+    response_json = requests.get(endpoint, data={}, headers={}, verify=False).json()
+    part_head = response_json['rand_key'][0:32]
+    part_tail = response_json['rand_key'][32:]
+    ivstring = "360luyou@install"
+    password = "abcd6666"
+
+    crypt_tail = to_crypto_string(part_tail, ivstring, password)
+    print(part_head, part_tail)
+    return part_head + crypt_tail
+
+def refresh_header():
+    global g_session
+    global g_cookie
+    global g_token_id
+    global g_header_get_data
+    endpoint = "http://192.168.0.1/router/web_login.cgi"
+    string = calculate_crypt_string()
+    info("crypt string: " + string + ", len: " + str(len(string)))
+    data = {"user":"admin", "pass":str(string), "from": "1"}
+    g_session = requests.Session()
+    res = g_session.post(endpoint, data=data, headers=scrape_headers.h_360_get_token, verify=False).json()
+    g_cookie = res["cookie"]
+    g_token_id = res["token_id"]
+
+def cleanup_procedure():
+    global g_cookie
+    global g_token_id
+    global g_header_get_data
+    g_header_get_data["Cookie"] = "Qihoo_360_login=" + g_cookie
+    g_header_get_data["Referer"] = "http://192.168.0.1/new_index.htm?token_id=" + g_token_id
+    g_header_get_data["token_id"] = g_token_id
+
+def main():
+    global g_header_get_data
+    endpoint = "http://192.168.0.1/app/devices/webs/getdeviceslist.cgi"
+    data = {}
+    while True:
+        try:
+            rotate_file()
+            response_json = requests.post(endpoint, data=data, headers=g_header_get_data, verify=False).json()
+            to_file(json.dumps(response_json, indent=None))
+            print(".", end="",flush=True)
+        except Exception as e:
+            info("request failure")
+            print(e)
+            try:
+                refresh_header()
+                cleanup_procedure()
+            except Exception as es2:
+                info("failed to refresh session")
+                print(e2)
+        sleep(delay)
+
+if __name__ == '__main__':
+    info("program starts")
+    refresh_header()
+    cleanup_procedure()
+    main()
