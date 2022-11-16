@@ -53,7 +53,7 @@ def to_file(str_content):
 
 def calculate_crypt_string():
     endpoint = "http://192.168.0.1/router/get_rand_key.cgi?noneed=noneed"
-    response_json = requests.get(endpoint, data={}, headers={}, verify=False).json()
+    response_json = requests.get(endpoint, data={}, headers={}, timeout=4, verify=False).json()
     part_head = response_json['rand_key'][0:32]
     part_tail = response_json['rand_key'][32:]
     ivstring = "360luyou@install"
@@ -73,7 +73,7 @@ def refresh_header():
     info("crypt string: " + string + ", len: " + str(len(string)))
     data = {"user":"admin", "pass":str(string), "from": "1"}
     g_session = requests.Session()
-    res = g_session.post(endpoint, data=data, headers=scrape_headers.h_360_get_token, verify=False).json()
+    res = g_session.post(endpoint, data=data, headers=scrape_headers.h_360_get_token, timeout=4, verify=False).json()
     g_cookie = res["cookie"]
     g_token_id = res["token_id"]
 
@@ -92,18 +92,16 @@ def main():
     while True:
         try:
             rotate_file()
-            response_json = requests.post(endpoint, data=data, headers=g_header_get_data, verify=False).json()
+            response_json = requests.post(endpoint, data=data, headers=g_header_get_data, timeout=4, verify=False).json()
             to_file(json.dumps(response_json, indent=None))
             print(".", end="",flush=True)
         except Exception as e:
             info("request failure")
-            print(e)
             try:
                 refresh_header()
                 cleanup_procedure()
             except Exception as es2:
                 info("failed to refresh session")
-                print(e2)
         sleep(delay)
 
 if __name__ == '__main__':
