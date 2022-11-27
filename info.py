@@ -5,6 +5,7 @@ import datetime
 import os
 from time import sleep
 from scrape_crypto import to_crypto_string
+from scrape_plugin import paint
 
 delay=10
 time_info_start = {
@@ -27,6 +28,7 @@ def rotate_file():
     global output_name
     global time_info_start
 
+    time_info_before_rotation = time_info_start
     today = datetime.datetime.today()
     time_info_now = {
             "year" :str(today.year),
@@ -34,10 +36,32 @@ def rotate_file():
             "day":str(today.day),
     }
     if time_info_start == time_info_now:
-        return
-    output_name = "log_" + time_info_now["year"] + "_" + time_info_now["month"] + "_" + time_info_now["day"] + ".txt"
-    time_info_start = time_info_now
-    info("file rotated to: " + output_name)
+        paint_forced = False
+    else:
+        output_name = "log_" + time_info_now["year"] + "_" + time_info_now["month"] + "_" + time_info_now["day"] + ".txt"
+        time_info_start = time_info_now
+        info("file rotated to: " + output_name)
+        paint_forced = True
+
+    tmp_file_name = time_info_before_rotation["year"] + \
+            "-" + time_info_before_rotation["month"] + \
+            "-" + time_info_before_rotation["day"] + ".png"
+    tmp_time_start = time_info_before_rotation["year"] + \
+            "." + time_info_before_rotation["month"] + \
+            "." + time_info_before_rotation["day"]
+    tmp_time_end = None
+    if not paint_forced:
+        tmp_tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+        tmp_time_info_tomorrow = {
+                "year" :str(tmp_tomorrow.year),
+                "month":str(tmp_tomorrow.month),
+                "day":str(tmp_tomorrow.day),
+        }
+        tmp_time_end = tmp_time_info_tomorrow["year"] + "." + tmp_time_info_tomorrow["month"] + "." + tmp_time_info_tomorrow["day"]
+    else:
+        tmp_time_end = time_info_now["year"] + "." + time_info_now["month"] + "." + time_info_now["day"]
+    paint(output_name, tmp_time_start, tmp_time_end, tmp_file_name, paint_forced)
+    return
 
 def to_file(str_content):
     global output_name
@@ -97,6 +121,7 @@ def main():
             print(".", end="",flush=True)
         except Exception as e:
             info("request failure")
+            print(e)
             try:
                 refresh_header()
                 cleanup_procedure()
