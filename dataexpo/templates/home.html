@@ -1,0 +1,20 @@
+{% block content %}
+    <div class="container">
+        <h1>{{title}}</h1>
+        <p>{{description}}</p>
+    </div>
+
+{% for article_row in articles | batch(3) %}
+<div>
+    {% for article in article_row %}
+    <td>
+	    <pre style="font-size: 30px">{{ article["name"] }}</pre>
+	    <img src="data:image/png;base64, {{ article["image"] }}" alt="image missing"/>
+	    <br>
+	    <br>
+    </td>
+    {% endfor %}
+</div>
+{% endfor %}
+
+{% endblock %}
