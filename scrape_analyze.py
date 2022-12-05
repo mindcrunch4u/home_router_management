@@ -151,7 +151,7 @@ def plot_array(plot_granularity, save_as="plot.png"):
     plt.rcParams["figure.autolayout"] = True
     plt.rcParams.update({'font.size': 8})
     plt.title("Line graph")
-    plt.locator_params(nbins=4)
+    #plt.locator_params(nbins=4)
 
     fig, ax = plt.subplots()
     fig.autofmt_xdate()
@@ -164,6 +164,7 @@ def plot_array(plot_granularity, save_as="plot.png"):
 
     plt.plot(x, y, color="red")
     plt.savefig(save_as)
+    plt.close('all')
 
 def arg_time_to_int_list(input_str):
     ret = []
@@ -176,6 +177,12 @@ def arg_time_to_int_list(input_str):
                         Non-Generic Functions Ends
 ----------------------------------------------------------------------------------------------------
 '''
+
+def clear_globals():
+    global global_y_axis
+    global global_x_axis
+    global_y_axis = []
+    global_x_axis = []
 
 def main():
     if len(sys.argv) < 5:
@@ -195,8 +202,8 @@ def main():
     plot_granularity = "hour"
 
     #very fine:
-    collection_granularity = "second"
-    plot_granularity = "hour"
+    #collection_granularity = "second"
+    #plot_granularity = "hour"
 
     # { (2022, 2, 22, h, m, s) : json_data }
     data_dict = process_file(target_file) 
