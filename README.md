@@ -1,4 +1,4 @@
-# home_router_management
+# Home Router Management
 This project provides a framework where you can manage your browser using a daemon script.
 
 The project itself provides
