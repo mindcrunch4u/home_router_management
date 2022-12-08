@@ -9,4 +9,8 @@ The project itself provides
 
 Structure of the files:
 
+<img src="https://github.com/mindcrunch4u/home_router_management/blob/main/about/about%20files.png" width="500">
+
 An example of served graphs(gathered by info.py):
+
+<img src="https://github.com/mindcrunch4u/home_router_management/blob/main/about/screenshot%20example.png" width="500">
