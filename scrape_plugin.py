@@ -1,4 +1,4 @@
-from scrape_analyze import analyze, clear_globals
+from scrape_analyze_fine import analyze, clear_globals
 from threading import Thread
 import datetime
 
@@ -15,7 +15,7 @@ def paint(file_path, str_time_start, str_time_end, out_file_name, forced=False):
         print("From: " + str_time_start + ", To: " + str_time_end + ", Forced: " + str(forced))
         g_time_last_paint = now
         try:
-            thread = Thread(target=analyze, args=(file_path, str_time_start, str_time_end, "minute", "hour",
+            thread = Thread(target=analyze, args=(file_path, str_time_start, str_time_end, "hour", "hour",
                     g_file_save_path + out_file_name))
             thread.start()
             thread.join()
