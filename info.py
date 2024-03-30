@@ -6,6 +6,7 @@ import os
 from time import sleep
 from scrape_crypto import to_crypto_string
 from scrape_plugin import paint
+from configuration import default_config
 
 delay=10
 time_info_start = {
@@ -80,8 +81,8 @@ def calculate_crypt_string():
     response_json = requests.get(endpoint, data={}, headers={}, timeout=4, verify=False).json()
     part_head = response_json['rand_key'][0:32]
     part_tail = response_json['rand_key'][32:]
-    ivstring = "360luyou@install"
-    password = "abcd6666"
+    ivstring = default_config.router_ivstring
+    password = default_config.router_password
 
     crypt_tail = to_crypto_string(part_tail, ivstring, password)
     print(part_head, part_tail)
@@ -95,7 +96,7 @@ def refresh_header():
     endpoint = "http://192.168.0.1/router/web_login.cgi"
     string = calculate_crypt_string()
     info("crypt string: " + string + ", len: " + str(len(string)))
-    data = {"user":"admin", "pass":str(string), "from": "1"}
+    data = {"user":default_config.router_username, "pass":str(string), "from": "1"}
     g_session = requests.Session()
     res = g_session.post(endpoint, data=data, headers=scrape_headers.h_360_get_token, timeout=4, verify=False).json()
     g_cookie = res["cookie"]

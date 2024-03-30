@@ -1,5 +1,5 @@
 [Unit]
-Description=Gather Traffic Info of Hosts From Router
+Description=Data Expo Web Server
 After=network.target
 StartLimitIntervalSec=0
 [Service]
@@ -9,8 +9,8 @@ Type=simple
 User=root
 Restart=always
 RestartSec=1
-ExecStart=/usr/bin/env python3 /root/scripts/info.py
-ExecStop=kill -9 `ps -elf | grep info.py | grep -v grep | awk -F ' ' '{print $4}'`
+ExecStart=/usr/bin/env python3 /root/scripts/dataexpo/dataexpo.py
+ExecStop=kill -9 `ps -elf | grep dataexpo.py | grep -v grep | awk -F ' ' '{print $4}'`
 WorkingDirectory=/root/scripts/
 
 [Install]

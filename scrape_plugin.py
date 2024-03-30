@@ -1,9 +1,10 @@
 from scrape_analyze_fine import analyze, clear_globals
 from threading import Thread
 import datetime
+from configuration import default_config
 
 g_time_last_paint = None
-g_file_save_path = "/root/scripts/dataexpo/images/"
+g_file_save_path = default_config.img_file_path
 
 def paint(file_path, str_time_start, str_time_end, out_file_name, forced=False):
     global g_file_save_path

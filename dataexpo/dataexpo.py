@@ -5,9 +5,19 @@ import os
 import time
 import base64
 
+import os
+import sys
+import inspect
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
+from configuration import default_config
+
 app = Flask(__name__)
-log_file_path = "../log*.txt"
-img_file_path = "./images/"
+log_file_path = default_config.log_file_path
+img_file_path = default_config.img_file_path
 
 def get_b64_image_from(path):
     b64str = None
@@ -56,4 +66,4 @@ def hello_world():
             )
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8081, debug=True)
+    app.run(host="0.0.0.0", port=8081, debug=False)

@@ -3,11 +3,11 @@ import json
 import sys
 from enum import Enum
 from dateutil.relativedelta import relativedelta
+from configuration import default_config
 
 global_y_axis = []
 global_x_axis = []
-global_search_name = "Redmi8-Redmi8"
-#global_search_name = "orangepizero2"
+global_search_name = default_config.plot_host_name
 
 time_range = {
         "year"  : 1,
