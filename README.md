@@ -1,6 +1,7 @@
 ## About
 
-This project provides a framework with which you can manage your browser using a daemon script.
+This project provides a framework with which you can manage your router using a python script.
+The `info.py` script by default collects traffic information of the hosts and save them to a text file.
 
 What this Project Does:
 - provides automatic login function for a 360 home router (reverse-engineered from the javascript)..
