@@ -12,19 +12,19 @@ Structure of the files:
 
 <img src="https://github.com/mindcrunch4u/home_router_management/blob/main/about/about%20files.png" width="500">
 
-An example of served graphs(gathered by info.py):
+An example of served graphs (plotted using the information gathered from `info.py`):
 
 <img src="https://github.com/mindcrunch4u/home_router_management/blob/main/about/screenshot%20example.png" width="500">
 
 ## Using this Project
 
-- Copy `systemd/info.service` to `/etc/systemd/system/info.service`
+1. Copy `systemd/info.service` to `/etc/systemd/system/info.service`
 	- Update `ExecStart` to point to the path of the `info.py` script.
-- Copy `systemd/dataexpo.service` to `/etc/systemd/system/dataexpo.service`
+2. Copy `systemd/dataexpo.service` to `/etc/systemd/system/dataexpo.service`
 	- Update `ExecStart` to point to the path of the `dataexpo.py` script.
-- Start the project
-	- `systemctl restart info`
-	- `systemctl restart dataexpo`
+3. Start the services
+	- `systemctl restart info` # to collect information.
+	- `systemctl restart dataexpo` # to plot the collected information.
 
 Visit `127.0.0.1:8081` to view the plots.
 
